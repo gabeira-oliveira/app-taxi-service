@@ -1,5 +1,7 @@
 package com.taxiservice.admin.catalogo.domain.category;
 
+import com.taxiservice.admin.catalogo.domain.exceptions.DomainException;
+import com.taxiservice.admin.catalogo.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +37,10 @@ class CategoryTest {
         final var outCategory = Category.create(expectedName, inDescription, inIsActive);
 
         final var actualException =
-                Assertions.assertThrows(DomainException.class, () -> outCategory.getName());
+                Assertions.assertThrows(DomainException.class, () -> outCategory.validate(new ThrowsValidationHandler()));
 
-        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0));
         Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().get(0).message());
 
     }
 

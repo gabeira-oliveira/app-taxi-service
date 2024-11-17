@@ -2,6 +2,7 @@ package com.taxiservice.admin.catalogo.domain.category;
 
 import com.taxiservice.admin.catalogo.domain.validation.ValidationHandler;
 import com.taxiservice.admin.catalogo.domain.validation.Validator;
+import com.taxiservice.admin.catalogo.domain.validation.Error;
 
 public class CategoryValidator  extends Validator {
 
@@ -14,12 +15,8 @@ public class CategoryValidator  extends Validator {
 
     @Override
     public void validate() {
-        if (category == null) {
-            validationHandler().handle("Category must not be null");
-            return;
-        }
-        if (category.getName() == null || category.getName().isEmpty()) {
-            validationHandler().handle("Category name must not be null or empty");
+        if(this.category.getName() == null || this.category.getName().isEmpty()) {
+            validationHandler().append(new Error("Name must not be null"));
         }
     }
 }
